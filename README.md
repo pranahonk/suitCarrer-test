@@ -1,6 +1,6 @@
 # Suitcarrer Test
 
-This project is for aplying
+This project is for aplying suitcarrer
 
 ## Prerequisites
 
