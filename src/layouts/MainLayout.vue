@@ -23,13 +23,12 @@
             <q-banner class="bg-primary text-white q-mb-md text-center">
               <h6>Contact List</h6>
             </q-banner>
-            <q-search
-              v-model="searchModel"
-              :debounce="600"
-              placeholder="Hotels"
-              icon="local_hotel"
-              float-label="What is your hotel?"
-            />
+            <q-input color="grey-3" class="q-mb-sm" label-color="grey-5" outlined v-model="search"
+                     label="Search Contacts">
+              <template v-slot:append>
+                <q-icon name="search" color="grey-5"/>
+              </template>
+            </q-input>
             <q-table
               :fullscreen="false"
               title="Treats"
@@ -190,11 +189,25 @@ export default {
         phone: null,
         id: null
       },
-      confirm: false
+      confirm: false,
+      search: null
     }
   },
   created () {
     this.initDataAPI()
+  },
+  watch: {
+    search: function (val) {
+      axios.get('http://localhost:3000/contacts?q=' + val)
+        .then(res => {
+          if (res.data) {
+            this.contacts = res.data
+          }
+        })
+        .catch(e => {
+          console.log(e)
+        })
+    }
   },
   methods: {
     initDataAPI: function () {
